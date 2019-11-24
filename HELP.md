@@ -1,2 +1,3 @@
 ##Community
-###社区
+##社区
+###[Github 登陆API](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
