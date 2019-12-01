@@ -1,0 +1,15 @@
+.main{
+    margin:30px;
+    background-color: white;
+}
+body{
+    background-color: #cfcfcf;
+}
+.btn-publish{
+    float:right;
+    margin-bottom: 15px;
+}
+hr{
+    height: 2px;
+    background-color: #cfcfcf;
+}

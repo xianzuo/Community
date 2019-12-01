@@ -23,12 +23,13 @@ public class IndexController {
             if(cookie.getName().equals("token")){
                 String token=cookie.getValue();
                 User user= userMapper.findByToken(token);
-                if(user!=null){
-                    request.getSession().setAttribute("user",user);
+                if(user!=null) {
+                    request.getSession().setAttribute("user", user);
                 }
                 break;
             }
         }
         return "index";
     }
+
 }

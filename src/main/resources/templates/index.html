@@ -9,8 +9,8 @@
     <script src="js/bootstrap.min.js"></script>
 
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
+<nav class="navbar navbar-default" >
+    <div class="container-fluid" style="background-color: #0f0f0f">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -31,11 +31,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${session.user==null}"><a href="https://github.com/login/oauth/authorize?client_id=e49f459a23998292ae8a&redirect_uri=http://169.254.139.164/callback&state=1">登陆</a></li>
                 <li class="dropdown" th:if="${session.user}!=null">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:utext="${'<img style=''border-radius:50%'' height=40px width=40px src='+session.user.avatar_url+'>'+session.user.name+'<span class=''caret''></span>'}" >我 <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:utext="${'<img style=''border-radius:50%'' height=25px width=25px src='+session.user.avatar_url+'>'+session.user.name+'<span class=''caret''></span>'}" >我 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">消息中心</a></li>
                         <li><a href="#">个人资料</a></li>
-                        <li><a href="#">退出登录</a></li>
+                        <li><a th:href="@{/logout}">退出登录</a></li>
                     </ul>
                 </li>
             </ul>

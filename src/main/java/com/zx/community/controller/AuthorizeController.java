@@ -41,9 +41,10 @@ public class AuthorizeController {
         accesstokenDTO.setState(state);
         String accessToken=githubProvider.getAccessToken(accesstokenDTO);
         GithubUser githubUser=githubProvider.getUser(accessToken);
-        if(githubUser!=null){
+        if(githubUser!=null&&githubUser.getId()!=null){
             //登陆成功
             //request.getSession().setAttribute("user",githubUser);
+
             User user = new User();
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setToken(UUID.randomUUID().toString());
@@ -51,7 +52,12 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(System.currentTimeMillis());
             user.setAvatar_url(githubUser.getAvatar_url());
-            userMapper.insert(user);
+            if(userMapper.findByAccountId(user.getAccountId())!=null){
+                userMapper.update(user);
+            }
+            else{
+               userMapper.insert(user);
+            }
             response.addCookie(new Cookie("token",user.getToken()));
             return "redirect:index";
         }
@@ -60,5 +66,13 @@ public class AuthorizeController {
         }
         //System.out.println(githubUser);
         return "redirect:index";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        response.addCookie(new Cookie("token",null));
+        return "redirect:index";
+
     }
 }
