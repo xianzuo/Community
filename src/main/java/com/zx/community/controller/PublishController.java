@@ -36,13 +36,14 @@ public class PublishController {
         User user=(User)request.getSession().getAttribute("user");
         if(user==null){
             request.getSession().setAttribute("errmsg","用户未登录");
-            return "redirect:/publish";
+            return "index";
         }
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
+        question.setAvatarUrl(user.getAvatar_url());
 
         questionMapper.insert(question);
-        return "redirect:/publish";
+        return "redirect:/index";
     }
 }

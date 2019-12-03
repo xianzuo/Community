@@ -1,13 +1,10 @@
-package com.zx.community.model;
+package com.zx.community.dto;
 
-import lombok.AllArgsConstructor;
+import com.zx.community.model.User;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Question {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
@@ -19,7 +16,5 @@ public class Question {
     private Integer likeCount;
     private String tag;
     private String avatarUrl;
-
-
-
+    private User user;
 }
