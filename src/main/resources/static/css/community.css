@@ -1,5 +1,5 @@
 .main{
-    margin:30px;
+    margin:10px 30px 10px 30px;
     background-color: white;
 }
 body{
@@ -14,7 +14,7 @@ body{
     height: 40px;
 }
 hr{
-    height: 2px;
+    height: 1px;
     background-color: #cfcfcf;
 }
 .text-desc{
@@ -22,3 +22,11 @@ hr{
     font-weight: normal;
     color:#999
 }
+.media{
+    border: 1px solid #afafaf;
+}
+.profile .section{
+    margin-top:70px
+}
+
+
