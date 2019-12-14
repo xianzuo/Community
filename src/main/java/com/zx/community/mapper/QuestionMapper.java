@@ -1,10 +1,7 @@
 package com.zx.community.mapper;
 
 import com.zx.community.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -26,4 +23,9 @@ public interface QuestionMapper {
     List<Question> listById(@Param("id") Integer id,@Param("offset") Integer offset,@Param("size") Integer size);
     @Select("select count(1) from question where creator=#{id}")
     Integer countById(@Param("id") Integer id);
+    @Update("update question set view_count=view_count+1 where id=#{id}")
+    void incView(@Param("id") Integer id);
+    @Select("select id,title,description,gmt_create gmtCreate,gmt_modified gmtModified,comment_count commentCount,view_count viewCount,like_count likeCount,creator,tag,avatar_url avatarUrl from question " +
+            "where id=#{id}" )
+    Question getByid(@Param("id")Integer id);
 }

@@ -6,25 +6,25 @@
 <body>
 <nav aria-label="Page navigation" style="float: right;" th:fragment="pag">
     <ul class="pagination">
-        <li th:if="${session.pagination.showFirstPage}">
+        <li th:if="${pagination.showFirstPage}">
             <a href="?page=1" aria-label="First">
                 <span aria-hidden="true">首页</span>
             </a>
         </li>
         <li>
-            <a  th:href="${'?page='+(session.pagination.page-1)}" aria-label="Previous" th:if="${session.pagination.showPrevious}">
+            <a  th:href="${'?page='+(pagination.page-1)}" aria-label="Previous" th:if="${pagination.showPrevious}">
                 <span aria-hidden="true">上一页</span>
             </a>
         </li>
-        <li th:each="i:${session.pagination.pages}"><a th:href="${'?page='+i}" th:text="${i}" th:style="${(session.pagination.page==i)?'color:white;background-color:#66ccff':''}"></a></li>
+        <li th:each="i:${pagination.pages}"><a th:href="${'?page='+i}" th:text="${i}" th:style="${(pagination.page==i)?'color:white;background-color:#66ccff':''}"></a></li>
 
         <li>
-            <a th:href="${'?page='+(session.pagination.page+1)}" aria-label="Next" th:if="${session.pagination.showNext}">
+            <a th:href="${'?page='+(pagination.page+1)}" aria-label="Next" th:if="${pagination.showNext}">
                 <span aria-hidden="true">下一页</span>
             </a>
         </li>
         <li>
-            <a th:href="${'?page='+session.pagination.totalPage}" aria-label="End" th:if="${session.pagination.showEndPage}">
+            <a th:href="${'?page='+pagination.totalPage}" aria-label="End" th:if="${pagination.showEndPage}">
                 <span aria-hidden="true">尾页</span>
             </a>
         </li>

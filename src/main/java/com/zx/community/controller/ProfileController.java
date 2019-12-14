@@ -36,7 +36,7 @@ public class ProfileController {
         }
         User user=(User)request.getSession().getAttribute("user");
         PaginationDTO pagination= questionService.list(user.getId(),page,size);
-        request.getSession().setAttribute("pagination",pagination);
+        model.addAttribute("pagination",pagination);
         return "profile";
     }
 }

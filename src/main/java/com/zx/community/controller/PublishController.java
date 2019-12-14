@@ -34,10 +34,6 @@ public class PublishController {
         question.setTag(tag);
         question.setDescription(description);
         User user=(User)request.getSession().getAttribute("user");
-        if(user==null){
-            request.getSession().setAttribute("errmsg","用户未登录");
-            return "index";
-        }
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());

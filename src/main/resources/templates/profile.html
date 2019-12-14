@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2> <span th:text="${sectionName}" aria-hidden="true"/></h2>
-            <div class="media" th:each="question:${session.pagination.questions}">
+            <div class="media" th:each="question:${pagination.questions}">
                 <div class="media-left ">
                     <a href="#">
                         <img class="media-object img-rounded" th:src="${question.user.avatar_url}" alt="" width="40px" height="40px">

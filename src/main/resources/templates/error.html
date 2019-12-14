@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <title th:text="${errmsg}">????</title>
+<body>
+<div th:if="${errmsg!=null}" th:utext="${'<script>alert('''+errmsg+''');window.location.href='''+'/index'+'''</script>'}"></div>
+<div th:if="${errmsg==null}">
+    <center><h1>404&nbsp;&nbsp;Not&nbsp;Found</h1></center>
+</div>
+</body>
+</html>
