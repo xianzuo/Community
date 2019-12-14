@@ -15,6 +15,5 @@ public class QuestionDTO {
     private Integer viewCount;
     private Integer likeCount;
     private String tag;
-    private String avatarUrl;
     private User user;
 }

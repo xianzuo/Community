@@ -2,6 +2,8 @@ package com.zx.community.interceptor;
 
 import com.zx.community.mapper.UserMapper;
 import com.zx.community.model.User;
+import com.zx.community.model.UserExample;
+import com.zx.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,10 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
 @Component
 public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie cookies[]=request.getCookies();
@@ -21,7 +25,9 @@ public class SessionInterceptor implements HandlerInterceptor {
         for (Cookie cookie:cookies) {
             if(cookie.getName().equals("token")){
                 String token=cookie.getValue();
-                User user= userMapper.findByToken(token);
+
+                User user= userService.getByToken(token);
+
                 if(user!=null) {
                     request.getSession().setAttribute("user", user);
                 }

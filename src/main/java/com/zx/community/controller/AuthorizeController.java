@@ -5,6 +5,7 @@ import com.zx.community.dto.GithubUser;
 import com.zx.community.mapper.UserMapper;
 import com.zx.community.model.User;
 import com.zx.community.provider.GithubProvider;
+import com.zx.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class AuthorizeController {
     @Autowired
     private GithubProvider githubProvider;
     @Autowired
-    private UserMapper userMapper            ;
+    private UserService userService            ;
     @Value("${github.client.id}")
     private String clientId;
     @Value("${github.client.secret}")
@@ -39,7 +40,9 @@ public class AuthorizeController {
         accesstokenDTO.setCode(code);
         accesstokenDTO.setRedirect_uri(redirectUri);
         accesstokenDTO.setState(state);
+        //获取访问令牌
         String accessToken=githubProvider.getAccessToken(accesstokenDTO);
+        //使用令牌获取github用户数据
         GithubUser githubUser=githubProvider.getUser(accessToken);
         if(githubUser!=null&&githubUser.getId()!=null){
             //登陆成功
@@ -51,13 +54,8 @@ public class AuthorizeController {
             user.setName(githubUser.getName());
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(System.currentTimeMillis());
-            user.setAvatar_url(githubUser.getAvatar_url());
-            if(userMapper.findByAccountId(user.getAccountId())!=null){
-                userMapper.update(user);
-            }
-            else{
-               userMapper.insert(user);
-            }
+            user.setAvatarUrl(githubUser.getAvatar_url());
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token",user.getToken()));
             return "redirect:index";
         }

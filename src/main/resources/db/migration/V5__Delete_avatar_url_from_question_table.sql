@@ -1,0 +1,1 @@
+ALTER TABLE question DROP avatar_url;

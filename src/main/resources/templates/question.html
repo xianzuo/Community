@@ -21,10 +21,14 @@
                 </span>
                 <hr>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
-                    <textarea cols="30" rows="10" class="form-control" th:text="${question.description}"></textarea>
+                    <span cols="30" rows="10" class="form-control" th:text="${question.description}"></span>
                 </div>
             </div>
             <div class="col-lg-3 col-md-12 hidden-sm hidden-xs" >
+                <span th:if="${session.user!=null}">
+                    <img th:src="${session.user.avatarUrl}" style="border-radius: 50%; width: 40px;height: 40px;">
+                </span>
+                <hr>
                 <h3>相关问题</h3>
             </div>
         </div>
