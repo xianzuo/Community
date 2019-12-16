@@ -56,7 +56,9 @@ public class AuthorizeController {
             user.setGmtModified(System.currentTimeMillis());
             user.setAvatarUrl(githubUser.getAvatar_url());
             userService.createOrUpdate(user);
-            response.addCookie(new Cookie("token",user.getToken()));
+            Cookie cookie=new Cookie("token",user.getToken());
+            cookie.setMaxAge(60*60*24*7);
+            response.addCookie(cookie);
             return "redirect:index";
         }
         else{

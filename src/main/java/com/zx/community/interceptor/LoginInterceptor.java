@@ -1,5 +1,7 @@
 package com.zx.community.interceptor;
 
+import com.zx.community.exception.CustomizeErrorCode;
+import com.zx.community.exception.CustomizeException;
 import com.zx.community.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -13,9 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         User user =(User)request.getSession().getAttribute("user");
         if(user==null){
-            request.setAttribute("errmsg","用户未登录");
-            request.getRequestDispatcher("/error").forward(request,response);
-            return false;
+           throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
         return true;
     }

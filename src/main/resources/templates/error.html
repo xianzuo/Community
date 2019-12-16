@@ -2,11 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta content="text/html;charset=UTF-8"/>
-    <title th:text="${errmsg}">????</title>
+    <title th:text="${message}">????</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet"th:href="@{/css/community.css}">
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
 <body>
-<div th:if="${errmsg!=null}" th:utext="${'<script>alert('''+errmsg+''');window.location.href='''+'/index'+'''</script>'}"></div>
-<div th:if="${errmsg==null}">
-    <center><h1>404&nbsp;&nbsp;Not&nbsp;Found</h1></center>
+<!--<div th:if="${errmsg!=null}" th:utext="${'<script>alert('''+errmsg+''');window.location.href='''+'/index'+'''</script>'}"></div>-->
+<!--<div th:if="${errmsg==null}">-->
+    <!--<center><h1>404&nbsp;&nbsp;Not&nbsp;Found</h1></center>-->
+<!--</div>-->
+
+<div class="jumbotron "  align="center" >
+    <div class="container" >
+        <h1 th:text="${message.equals('No message available')?'PAGE NOT FOUND':message}"></h1>
+        <p ><span>错误码：</span> <span th:text="${code}"></span><span th:if="${message.equals('No message available')}">404</span></p>
+        <p><a class="btn btn-primary btn-lg" href="/" role="button">返回首页</a></p>
+    </div>
 </div>
 </body>
 </html>

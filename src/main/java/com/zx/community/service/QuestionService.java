@@ -24,7 +24,7 @@ public class QuestionService {
         Integer offset=(page-1)*size;
 
         QuestionExample example=new QuestionExample();
-        example.setOrderByClause("gmt_create desc");
+        example.setOrderByClause("gmt_modified desc");
         List<Question> questions=questionMapper.selectByExampleWithRowbounds(example,new RowBounds(offset,size));
         PaginationDTO paginationDTO=new PaginationDTO();
         List<QuestionDTO> questionDTOS=ConvertQuestion(questions);
@@ -38,7 +38,7 @@ public class QuestionService {
     public PaginationDTO list(Integer id, Integer page, Integer size) {
         Integer offset=(page-1)*size;
         QuestionExample example=new QuestionExample();
-        example.setOrderByClause("gmt_create desc");
+        example.setOrderByClause("gmt_modified desc");
         example.createCriteria().andCreatorEqualTo(id);
         List<Question> questions=questionMapper.selectByExampleWithRowbounds(example,new RowBounds(offset,size));
         PaginationDTO paginationDTO=new PaginationDTO();
@@ -50,18 +50,23 @@ public class QuestionService {
         return paginationDTO;
     }
     public QuestionDTO getById(Integer id){
+
         Question question=questionMapper.selectByPrimaryKey(id);
+        if(question==null)return null;
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         User user=userService.findById(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }
-    public void incView(Integer id){
+    public int incView(Integer id){
         Question question=questionMapper.selectByPrimaryKey(id);
+        if(question==null){
+            return 0;
+        }
         QuestionExample example=new QuestionExample();
         question.setViewCount(question.getViewCount()+1);
-        questionMapper.updateByPrimaryKey(question);
+        return questionMapper.updateByPrimaryKey(question);
     }
     public List<QuestionDTO> ConvertQuestion(List<Question> questions){
         List<QuestionDTO> questionDTOS=new ArrayList<>();
@@ -75,4 +80,20 @@ public class QuestionService {
         return questionDTOS;
     }
 
+    public int insertOrUpdate(Question question) {
+
+        if(question.getId()!=null){
+            //修改
+            question.setGmtModified(System.currentTimeMillis());
+            return questionMapper.updateByPrimaryKeySelective(question);
+        }
+        else{
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(System.currentTimeMillis());
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            question.setLikeCount(0);
+            return questionMapper.insert(question);
+        }
+    }
 }

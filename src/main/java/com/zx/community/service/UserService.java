@@ -16,7 +16,7 @@ public class UserService {
         UserExample example=new UserExample();
         example.createCriteria().andTokenEqualTo(token);
         List<User> users=userMapper.selectByExample(example);
-        if(users==null)return null;
+        if(users==null||users.size()==0)return null;
         return users.get(0);
     }
 
@@ -27,19 +27,19 @@ public class UserService {
         UserExample example=new UserExample();
         example.createCriteria().andAccountIdEqualTo(accountId);
         List<User> users = userMapper.selectByExample(example);
-        if(users == null)return null;
+        if(users==null||users.size()==0)return null;
         return users.get(0);
     }
-    public void createOrUpdate(User user) {
+    public int createOrUpdate(User user) {
         if(findByAccountId(user.getAccountId())==null){
             //新用户创建用户
-            userMapper.insertSelective(user);
+            return userMapper.insertSelective(user);
         }
         else{
             //老用户更新token
             UserExample example=new UserExample();
             example.createCriteria().andAccountIdEqualTo(user.getAccountId());
-            userMapper.updateByExampleSelective(user,example);
+            return userMapper.updateByExampleSelective(user,example);
         }
     }
 }

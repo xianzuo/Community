@@ -2,10 +2,13 @@ package com.zx.community.controller;
 
 import com.zx.community.dto.PaginationDTO;
 import com.zx.community.dto.QuestionDTO;
+import com.zx.community.exception.CustomizeErrorCode;
+import com.zx.community.exception.CustomizeException;
 import com.zx.community.mapper.UserMapper;
 import com.zx.community.model.Question;
 import com.zx.community.model.User;
 import com.zx.community.service.QuestionService;
+import com.zx.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +23,7 @@ import java.util.List;
 @Controller
 public class IndexController {
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
     @Autowired
     QuestionService questionService;
     @GetMapping(value = {"/","/index"})
@@ -31,6 +34,9 @@ public class IndexController {
                         @RequestParam(name="size",defaultValue = "8") Integer size){
 
         PaginationDTO pagination=questionService.list(page,size);
+        if(pagination==null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         model.addAttribute("pagination",pagination);
         return "index";
     }

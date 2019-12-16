@@ -23,6 +23,15 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
                     <span cols="30" rows="10" class="form-control" th:text="${question.description}"></span>
                 </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${session.user!=null&&session.user.id==question.creator}">
+                    <a class="btn btn-publish btn-success" th:href="${'/publish/'+question.id}">编辑</a>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+
+                    <h4><span>1</span>个回复</h4>
+                    <hr>
+                </div>
             </div>
             <div class="col-lg-3 col-md-12 hidden-sm hidden-xs" >
                 <span th:if="${session.user!=null}">
